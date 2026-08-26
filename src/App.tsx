@@ -9,8 +9,9 @@ const App = () => {
 	});
 
 	const getApiData = async (): Promise<void> => {
-		const baseUrl: string = "https://ghibliapi.vercel.app";
-		const url: string = `${baseUrl}/films`;
+		//const baseUrl: string = "https://ghibliapi.vercel.app";
+		//const url: string = `${baseUrl}/films`;
+		const url: string = "/api/films";
 
 		try {
 			setApiState({ status: "loading" });
