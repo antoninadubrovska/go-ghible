@@ -4,6 +4,8 @@ import { useState } from "react";
 import type { ApiState, Film } from "./data/types.ts";
 import { FilmsSchema } from "./data/validate.ts";
 
+import { sortFilmsByReleaseDate } from "./utils/sortFilms.ts";
+
 const App = () => {
 	const [apiState, setApiState] = useState<ApiState>({
 		status: "idle",
@@ -26,9 +28,16 @@ const App = () => {
 
 				const parsedData = FilmsSchema.parse(data);
 
+				// setApiState({
+				// 	status: "success",
+				// 	data: parsedData,
+				// });
+
+				const sortedFilms = sortFilmsByReleaseDate(parsedData);
+
 				setApiState({
 					status: "success",
-					data: parsedData,
+					data: sortedFilms,
 				});
 
 				console.log("Data from Studio Ghibli API:", data);
