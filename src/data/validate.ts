@@ -8,3 +8,5 @@ export const FilmSchema = z.object({
     director: z.string(),
     release_date: z.string(),
 });
+
+export const FilmsSchema = z.array(FilmSchema);

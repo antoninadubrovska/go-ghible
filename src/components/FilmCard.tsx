@@ -1,4 +1,4 @@
-import type { Film } from "../data/types.tsx";
+import type { Film } from "../data/types.ts";
 
 type FilmCardProps = {
     film: Film;

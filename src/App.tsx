@@ -2,6 +2,7 @@ import FilmCard from "./components/FilmCard.tsx";
 
 import { useState } from "react";
 import type { ApiState, Film } from "./data/types.ts";
+import { FilmsSchema } from "./data/validate.ts";
 
 const App = () => {
 	const [apiState, setApiState] = useState<ApiState>({
@@ -21,7 +22,9 @@ const App = () => {
 			if (response.ok) {
 				const data: unknown = await response.json();
 
-				const parsedData: Film[] = data as Film[]; //temporary solution instead of zod
+				// const parsedData: Film[] = data as Film[]; //temporary solution instead of zod
+
+				const parsedData = FilmsSchema.parse(data);
 
 				setApiState({
 					status: "success",
@@ -56,30 +59,7 @@ const App = () => {
 
 			{apiState.status === "error" && <p>{apiState.message}</p>}
 
-			{/* {apiState.status === "success" && (
-                <div>
-                    {apiState.data.map((film) => (
-                        <article key={film.id}>
-                            <h2>{film.title}</h2>
-
-                            <img
-                                src={film.image}
-                                alt={film.title}
-                            />
-
-                            <p>{film.description}</p>
-
-                            <p>
-                                Director: {film.director}
-                            </p>
-
-                            <p>
-                                Release year: {film.release_date}
-                            </p>
-                        </article>
-                    ))}
-                </div>
-            )} */}
+			{/* Film cards */}
 
 			{apiState.status === "success" && (
 				<div>
