@@ -133,9 +133,9 @@ main {
 
 /* Heading */
 h1 {
-    margin: 0 0 2rem;
+    margin: 0 0 2em;
     color: #176b67;
-    font-size: 2.5rem;
+    font-size: 2.5em;
 
 }
 
@@ -146,7 +146,7 @@ button {
     padding: 0.75rem 1.25rem;
     background-color: #176b67;
     color: white;
-    font-size: 1rem;
+    font-size: 1em;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.2s ease;
 }
@@ -163,12 +163,27 @@ main > p {
 }
 
 /* Film list */
-main > div {
+/* main > div {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2em;
+    margin-top: 2em;
+} */
+
+.film-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 2em;
     margin-top: 2em;
 }
+
+.search-container{
+	margin:2em;
+	display: flex;
+	justify-content: center;
+	gap: 1em;
+}
+
 
 /* Film card */
 article {
