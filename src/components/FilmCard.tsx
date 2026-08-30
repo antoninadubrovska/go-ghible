@@ -6,7 +6,7 @@ type FilmCardProps = {
 
 const FilmCard = ({ film }: FilmCardProps) => {
 	return (
-		<article>
+		<article className="film-card">
 			<h2>{film.title}</h2>
 
 			<img src={film.image} alt={film.title} />
