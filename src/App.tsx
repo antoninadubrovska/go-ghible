@@ -1,7 +1,7 @@
 import FilmCard from "./components/FilmCard.tsx";
 
 import { useState } from "react";
-import type { ApiState } from "./data/types.ts";
+import type { ApiState, UserFilm } from "./data/types.ts";
 import { FilmsSchema } from "./data/validate.ts";
 
 import { sortFilmsByReleaseDate } from "./utils/sortFilms.ts";
@@ -14,6 +14,10 @@ const App = () => {
 
 	// search state
 	const [searchTerm, setSearchTerm] = useState<string>("");
+
+	// userFilms to all films + favorite status
+
+	const [userFilms, setUserFilms] = useState<UserFilm[]>([]);
 
 	const getApiData = async (): Promise<void> => {
 		//const baseUrl: string = "https://ghibliapi.vercel.app";
@@ -39,6 +43,14 @@ const App = () => {
 
 				const sortedFilms = sortFilmsByReleaseDate(parsedData);
 
+				// false favorite added to every film
+				const userFilms: UserFilm[] = sortedFilms.map((film) => ({
+					...film,
+					favorite: false,
+				}));
+
+				setUserFilms(userFilms);
+
 				setApiState({
 					status: "success",
 					data: sortedFilms,
@@ -62,6 +74,17 @@ const App = () => {
 		}
 	};
 
+	// 3 change 'favorite/unfavorite' status
+	const toggleFavorite = (filmId: string): void => {
+		setUserFilms((currentFilms) =>
+			currentFilms.map((film) =>
+				film.id === filmId
+					? { ...film, favorite: !film.favorite }
+					: film,
+			),
+		);
+	};
+
 	return (
 		<main>
 			<h1>Go Ghibli</h1>
@@ -69,14 +92,6 @@ const App = () => {
 
 			<p>Status: {apiState.status}</p>
 			{apiState.status === "error" && <p>{apiState.message}</p>}
-			{/* Film cards */}
-			{/* {apiState.status === "success" && (
-				<div>
-					{apiState.data.map((film) => (
-						<FilmCard key={film.id} film={film} />
-					))}
-				</div>
-			)} */}
 
 			{apiState.status === "success" && (
 				<div>
@@ -95,16 +110,29 @@ const App = () => {
 						/>
 					</div>
 					<div className="film-container">
-
-					{searchFilmsByTitle(apiState.data, searchTerm).map(
+						{/* {searchFilmsByTitle(apiState.data, searchTerm).map(
 						(film) => (
 							<FilmCard key={film.id} film={film} />
 						),
-					)}
+					)} */}
 
+						{searchFilmsByTitle(apiState.data, searchTerm).map(
+							(film) => {
+								const userFilm = userFilms.find(
+									(userFilm) => userFilm.id === film.id,
+								);
 
+								return (
+									<FilmCard
+										key={film.id}
+										film={film}
+										favorite={userFilm?.favorite ?? false}
+										onToggleFavorite={toggleFavorite}
+									/>
+								);
+							},
+						)}
 					</div>
-
 				</div>
 			)}
 		</main>
