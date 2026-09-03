@@ -4,10 +4,11 @@ import { useState } from "react";
 import FilmCard from "./components/FilmCard.tsx";
 
 import type { ApiState, UserFilm } from "./data/types.ts";
-import { FilmsSchema } from "./data/validate.ts";
+//import { FilmsSchema } from "./data/validate.ts";
 
-import { sortFilmsByReleaseDate } from "./utils/sortFilms.ts";
+//import { sortFilmsByReleaseDate } from "./utils/sortFilms.ts";
 import { searchFilmsByTitle } from "./utils/searchFilms.ts";
+import { getFilms } from "./api/films.ts";
 
 const App = () => {
 	const [apiState, setApiState] = useState<ApiState>({
@@ -19,29 +20,12 @@ const App = () => {
 	const [userFilms, setUserFilms] = useState<UserFilm[]>([]);
 
 	const getApiData = async (): Promise<void> => {
-		const url: string = "/api/films";
+		//const url: string = "/api/films";
 
 		try {
 			setApiState({ status: "loading" });
 
-			const response: Response = await fetch(url);
-
-			if (!response.ok) {
-				setApiState({
-					status: "error",
-					message: "Fel från API. Statuskod: " + response.status,
-				});
-
-				return;
-			}
-
-			const data: unknown = await response.json();
-
-			console.log("Data from Studio Ghibli API:", data);
-
-			const parsedData = FilmsSchema.parse(data);
-
-			const sortedFilms = sortFilmsByReleaseDate(parsedData);
+			const sortedFilms = await getFilms();
 
 			const filmsWithFavoriteStatus: UserFilm[] = sortedFilms.map(
 				(film) => ({
