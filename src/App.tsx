@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-//import FilmCard from "./components/FilmCard.tsx";
-
 import type { ApiState, UserFilm, View } from "./data/types.ts";
 
 import { getFilms } from "./api/films.ts";
@@ -9,6 +7,8 @@ import { getFilms } from "./api/films.ts";
 import AllFilmsView from "./views/AllFilmsView.tsx";
 import FavoritesView from "./views/FavoritesView.tsx";
 import ViewNavigation from "./components/ViewNavigation.tsx";
+import { createUserFilms } from "./utils/createUserFilms.ts";
+
 
 
 const App = () => {
@@ -21,24 +21,16 @@ const App = () => {
 	const [userFilms, setUserFilms] = useState<UserFilm[]>([]);
 
 	const getApiData = async (): Promise<void> => {
-		//const url: string = "/api/films";
-
 		try {
 			setApiState({ status: "loading" });
 
-			const sortedFilms = await getFilms();
+			const films = await getFilms();
+			const userFilms = createUserFilms(films);
 
-			const filmsWithFavoriteStatus: UserFilm[] = sortedFilms.map(
-				(film) => ({
-					...film,
-					favorite: false,
-				}),
-			);
-
-			setUserFilms(filmsWithFavoriteStatus);
+			setUserFilms(userFilms);
 			setApiState({ status: "success" });
 		} catch (error: unknown) {
-			const message: string =
+			const message =
 				error instanceof Error ? error.message : "okänt fel.";
 
 			setApiState({
@@ -69,23 +61,23 @@ const App = () => {
 			{apiState.status === "error" && <p>{apiState.message}</p>}
 			{apiState.status === "success" && (
 				<>
-					{" "}
+
 					<ViewNavigation
 						currentView={currentView}
 						onViewChange={setCurrentView}
-					/>{" "}
+					/>
 					{currentView === "all" && (
 						<AllFilmsView
 							userFilms={userFilms}
 							onToggleFavorite={toggleFavorite}
 						/>
-					)}{" "}
+					)}
 					{currentView === "favorites" && (
 						<FavoritesView
 							userFilms={userFilms}
 							onToggleFavorite={toggleFavorite}
 						/>
-					)}{" "}
+					)}
 				</>
 			)}
 		</main>
