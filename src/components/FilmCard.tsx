@@ -9,7 +9,7 @@ type FilmCardProps = {
 const FilmCard = ({ film, favorite, onToggleFavorite }: FilmCardProps) => {
 	return (
 		<article className="film-card">
-			<h2>{film.title}</h2>
+			<h2 className="film-card-title">{film.title}</h2>
 
 			<img src={film.image} alt={film.title} />
 
@@ -21,10 +21,10 @@ const FilmCard = ({ film, favorite, onToggleFavorite }: FilmCardProps) => {
 
 			<p>Release year: {film.release_date}</p>
 
-			<button onClick={() => onToggleFavorite(film.id)}>
+			<button className='film-card-button' onClick={() => onToggleFavorite(film.id)}>
 				{favorite ? "★ Favorite" : "☆ Add to favorites"}
 			</button>
-			
+
 		</article>
 	);
 };
