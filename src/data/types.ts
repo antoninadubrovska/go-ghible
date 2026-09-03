@@ -32,9 +32,14 @@ export type FavoriteFilm = UserFilm & {
 // for the Favorites view
 
 
-export type ApiState =
-    | { status: "idle" }
-    | { status: "loading" }
-    | { status: "success"; data: Film[] }
-	| { status: "error"; message: string };
+// export type ApiState =
+//     | { status: "idle" }
+//     | { status: "loading" }
+//     | { status: "success"; data: Film[] }
+// 	| { status: "error"; message: string };
 
+export type ApiState =
+	| { status: "idle" }
+	| { status: "loading" }
+	| { status: "success" }
+	| { status: "error"; message: string };

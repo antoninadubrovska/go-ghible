@@ -37,9 +37,13 @@ Bedömning och feedback?
 Du som vill ha feedback från läraren kan utnyttja lektionstid (när vi inte har genomgång) till att be om feedback.
 
 
+hierarchy:
 
-
-
+Film
+ │
+ └── UserFilm
+       │
+       └── FavoriteFilm
 
 
 
