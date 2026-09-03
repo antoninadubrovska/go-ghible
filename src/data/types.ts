@@ -43,3 +43,5 @@ export type ApiState =
 	| { status: "loading" }
 	| { status: "success" }
 	| { status: "error"; message: string };
+
+	export type View = "all" | "favorites";
