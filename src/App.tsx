@@ -1,16 +1,18 @@
-
 import { useState } from "react";
 
 import FilmCard from "./components/FilmCard.tsx";
 
 import type { ApiState, UserFilm } from "./data/types.ts";
-//import { FilmsSchema } from "./data/validate.ts";
 
-//import { sortFilmsByReleaseDate } from "./utils/sortFilms.ts";
 import { searchFilmsByTitle } from "./utils/searchFilms.ts";
 import { getFilms } from "./api/films.ts";
+//1
+type View = "all" | "favorites";
 
 const App = () => {
+
+	const [currentView, setCurrentView] = useState<View>("all");
+
 	const [apiState, setApiState] = useState<ApiState>({
 		status: "idle",
 	});
@@ -57,25 +59,41 @@ const App = () => {
 		);
 	};
 
+	// const visibleFilms: UserFilm[] = searchFilmsByTitle(
+	// 	userFilms,
+	// 	searchTerm,
+	// );
+
+
+	const filmsForCurrentView: UserFilm[] =
+		currentView === "favorites"
+			? userFilms.filter((film) => film.favorite)
+			: userFilms;
+
 	const visibleFilms: UserFilm[] = searchFilmsByTitle(
-		userFilms,
+		filmsForCurrentView,
 		searchTerm,
 	);
 
 	return (
 		<main>
 			<h1>Go Ghibli</h1>
-
 			<button onClick={getApiData}>Hämta filmer</button>
-
 			<p>Status: {apiState.status}</p>
-
-			{apiState.status === "error" && (
-				<p>{apiState.message}</p>
-			)}
-
+			{apiState.status === "error" && <p>{apiState.message}</p>}
 			{apiState.status === "success" && (
 				<div>
+
+					<div className="view-navigation">
+						<button onClick={() => setCurrentView("all")}>
+							All Films
+						</button>
+
+						<button onClick={() => setCurrentView("favorites")}>
+							Favorites
+						</button>
+					</div>
+
 					<div className="search-container">
 						<label htmlFor="search">Search films:</label>
 
@@ -107,4 +125,3 @@ const App = () => {
 };
 
 export default App;
-
