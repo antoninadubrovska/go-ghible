@@ -5,21 +5,36 @@ type ViewNavigationProps = {
 	onViewChange: (view: View) => void;
 };
 
-const ViewNavigation = ({
-	currentView,
-	onViewChange,
-}: ViewNavigationProps) => {
+const ViewNavigation = ({ currentView, onViewChange }: ViewNavigationProps) => {
 	return (
 		<nav className="view-navigation">
-			<button
+			{/* <button
 				className={currentView === "all" ? "active" : ""}
+				onClick={() => onViewChange("all")}
+			>
+				All Films
+			</button> */}
+
+			<button
+				className={`view-navigation-button ${
+					currentView === "all" ? "active" : ""
+				}`}
 				onClick={() => onViewChange("all")}
 			>
 				All Films
 			</button>
 
-			<button
+			{/* <button
 				className={currentView === "favorites" ? "active" : ""}
+				onClick={() => onViewChange("favorites")}
+			>
+				Favorites
+			</button> */}
+
+			<button
+				className={`view-navigation-button ${
+					currentView === "favorites" ? "active" : ""
+				}`}
 				onClick={() => onViewChange("favorites")}
 			>
 				Favorites

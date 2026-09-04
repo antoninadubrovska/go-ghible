@@ -1,6 +1,7 @@
 
 @import './components/FilmCard.css';
 @import 'App.css';
+@import './components/ViewNavigation.css';
 
 /* :root {
   --text: #6b6375;
