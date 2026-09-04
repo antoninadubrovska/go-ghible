@@ -1,6 +1,8 @@
+import { useState } from "react";
 import FilmCard from "../components/FilmCard.tsx";
 import type { UserFilm } from "../data/types.ts";
-//import SearchBar from "../components/SearchBar.tsx";
+import { searchFilmsByTitle } from "../utils/searchFilms.ts";
+import SearchBar from "../components/SearchBar.tsx";
 
 type FavoritesViewProps = {
 	userFilms: UserFilm[];
@@ -10,15 +12,23 @@ type FavoritesViewProps = {
 const FavoritesView = ({ userFilms, onToggleFavorite }: FavoritesViewProps) => {
 	const favoriteFilms: UserFilm[] = userFilms.filter((film) => film.favorite);
 
+	const [searchTerm, setSearchTerm] = useState<string>("");
+
+	const favoriteFilmsToShow: UserFilm[] = searchFilmsByTitle(
+		favoriteFilms,
+		searchTerm,
+	);
+
 	return (
 		<div>
-			{/* <SearchBar
-	searchTerm={searchTerm}
-	onSearchChange={setSearchTerm}
-			/> */}
-
+			{favoriteFilms.length > 2 && (
+				<SearchBar
+					searchTerm={searchTerm}
+					onSearchChange={setSearchTerm}
+				/>
+			)}
 			<div className="film-container">
-				{favoriteFilms.map((film) => (
+				{favoriteFilmsToShow.map((film) => (
 					<FilmCard
 						key={film.id}
 						film={film}
