@@ -51,30 +51,4 @@ main > p {
 	gap: 1em;
 } */
 
-/* Search */
-.search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.75rem;
-    margin: 2rem 0;
-}
-
-.search-container label {
-    font-weight: 600;
-}
-
-.search-container input {
-    width: 280px;
-    padding: 0.7rem 1rem;
-    border: 1px solid #b8c9c7;
-    border-radius: 8px;
-    font-size: 1rem;
-    background-color: white;
-}
-
-.search-container input:focus {
-    outline: 2px solid #176b67;
-    outline-offset: 1px;
-}
 
