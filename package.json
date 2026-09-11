@@ -7,14 +7,21 @@
 		"dev": "vite",
 		"build": "tsc -b && vite build",
 		"lint": "oxlint",
-		"preview": "vite preview"
+		"preview": "vite preview",
+"build-backend": "tsc -p tsconfig.backend.json",
+"run-backend": "node backendDist/server.js"
 	},
 	"dependencies": {
+		"express": "^5.2.1",
 		"react": "^19.2.8",
 		"react-dom": "^19.2.8",
-		"zod": "^4.4.3"
+		"zod": "^4.6.2"
 	},
+
+
+
 	"devDependencies": {
+		"@types/express": "^5.0.6",
 		"@types/node": "^24.13.3",
 		"@types/react": "^19.2.18",
 		"@types/react-dom": "^19.2.4",
@@ -24,3 +31,4 @@
 		"vite": "^8.2.2"
 	}
 }
+
