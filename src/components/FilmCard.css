@@ -21,8 +21,6 @@
 
 
 .film-card-title {
-    /* min-height: 3.5em;
-    margin: 1.25em 1.25em 0.75em; */
 	line-height: 1.2;
     min-height: calc(2 * 1.2em);
 

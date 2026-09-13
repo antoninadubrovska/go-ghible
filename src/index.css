@@ -116,7 +116,9 @@ code {
   background: var(--code-bg);
 } */
 
-
+root{
+	--button-favorite:#492e6b;
+}
 
 * {
     box-sizing: border-box;
