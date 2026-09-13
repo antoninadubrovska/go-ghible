@@ -96,4 +96,29 @@ router.put("/:id", (req, res): void => {
 	}
 });
 
+// DELETE /api/movies/:id
+router.delete("/:id", (req, res): void => {
+	// 1. Read and convert the ID
+
+	const idString: string = req.params.id;
+	const id: number = Number(idString);
+	// 2. Validate the ID
+	if (Number.isNaN(id)) {
+		res.sendStatus(400);
+		return;
+	}
+	// 3. Find the movie's index
+
+	const foundIndex: number = movies.findIndex((movie) => movie.id === id);
+	// 4. Remove the movie if it exists
+	if (foundIndex >= 0) {
+		movies.splice(foundIndex, 1);
+		res.sendStatus(200);
+	} else {
+		res.sendStatus(404);
+	}
+
+}
+);
+
 export default router;
