@@ -1,39 +1,43 @@
-import express, {
-	type Express,
-	type RequestHandler,
-  } from "express";
+import express, { type Express, type RequestHandler } from "express";
 
-  import moviesRouter from "./routes/movies.js";
+import moviesRouter from "./routes/movies.js";
 
-  // ---- Settings ---- //
+import reviewsRouter from "./routes/reviews.js";
+import { reviews } from "./data/reviews.js";
 
-  const app: Express = express();
+// ---- Settings ---- //
 
-  const port: number = 3002;
+const app: Express = express();
 
-  // ---- Middleware ---- //
+const port: number = 3002;
 
-  const logger: RequestHandler = (req, res, next): void => {
+// ---- Middleware ---- //
+
+const logger: RequestHandler = (req, res, next): void => {
 	console.log(`${req.method} ${req.path}`, req.body);
 	next();
-  };
+};
 
-  app.use(logger);
+app.use(logger);
 
-  // Allows Express to read JSON request bodies
-  app.use(express.json());
 
-  // Serves the React production files later
-  // app.use(express.static("./dist"));
+// Allows Express to read JSON request bodies
+app.use(express.json());
 
-  // ---- Routes ---- //
 
-  app.use("/api/movies", moviesRouter);
+// Serves the React production files later
+// app.use(express.static("./dist"));
 
-  // ---- Start server ---- //
+// ---- Routes ---- //
 
-  app.listen(port, (): void => {
-	console.log(
-	  `Server is listening on port ${port}. Stop it with Ctrl+C.`
-	);
-  });
+app.use("/api/movies", moviesRouter);
+app.use("/api/reviews", reviewsRouter);
+
+// ---- Start server ---- //
+
+// test reviews route
+console.log("Reviews:", reviews);
+
+app.listen(port, (): void => {
+	console.log(`Server is listening on port ${port}. Stop it with Ctrl+C.`);
+});
