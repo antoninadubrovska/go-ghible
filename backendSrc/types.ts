@@ -8,3 +8,9 @@ export const MovieSchema = z.object({
 });
 
 export type Movie = z.infer<typeof MovieSchema>;
+
+export const MovieWithoutIdSchema = MovieSchema.omit({
+	id: true,
+});
+
+export type MovieWithoutId = z.infer<typeof MovieWithoutIdSchema>;
