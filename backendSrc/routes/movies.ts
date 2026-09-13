@@ -1,8 +1,9 @@
 import { Router } from "express";
+import * as z from "zod";
 // TODO
 import { movies } from "../data/movies.js";
-
-console.log("MOVIES ROUTER LOADED");
+import { MovieSchema } from "../types.js";
+// console.log("MOVIES ROUTER LOADED");
 
 const router = Router();
 
@@ -40,6 +41,17 @@ router.get("/:id", (req, res): void => {
 	}
 
 	res.status(200).send(movie);
+});
+
+// POST /api/movies
+router.post("/", (req, res): void => {
+	try {
+		const movie = z.parse(MovieSchema, req.body)
+		movies.push(movie)
+		res.sendStatus(201)
+	} catch(error) {
+		res.sendStatus(400)
+	}
 });
 
 export default router;
