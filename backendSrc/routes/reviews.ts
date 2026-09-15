@@ -125,4 +125,26 @@ router.put("/:id", (req, res): void => {
 	}
 });
 
+// DELETE /api/reviews/:id
+router.delete("/:id", (req, res): void => {
+	const idString: string = req.params.id;
+	const id: number = Number(idString);
+
+	if (Number.isNaN(id)) {
+		res.sendStatus(400);
+		return;
+	}
+
+	const foundIndex: number = reviews.findIndex(
+		(review) => review.id === id,
+	);
+
+	if (foundIndex >= 0) {
+		reviews.splice(foundIndex, 1);
+		res.sendStatus(200);
+	} else {
+		res.sendStatus(404);
+	}
+});
+
 export default router;
